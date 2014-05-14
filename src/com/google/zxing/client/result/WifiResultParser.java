@@ -43,7 +43,7 @@ public final class WifiResultParser extends ResultParser {
 			return null;
 		}
 		String ssid = matchSinglePrefixedField("S:", rawText, ';', false);
-		if (ssid == null || ssid.isEmpty()) {
+		if (ssid == null || "".equals(ssid)) {
 			return null;
 		}
 		String pass = matchSinglePrefixedField("P:", rawText, ';', false);

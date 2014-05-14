@@ -16,10 +16,10 @@
 
 package com.google.zxing.client.result;
 
-import com.google.zxing.Result;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.zxing.Result;
 
 /**
  * Implements KDDI AU's address book format. See <a
@@ -68,7 +68,7 @@ public final class AddressBookAUResultParser extends ResultParser {
 				break;
 			}
 			if (values == null) {
-				values = new ArrayList<>(max); // lazy init
+				values = new ArrayList<String>(max); // lazy init
 			}
 			values.add(value);
 		}
@@ -77,4 +77,5 @@ public final class AddressBookAUResultParser extends ResultParser {
 		}
 		return values.toArray(new String[values.size()]);
 	}
+
 }

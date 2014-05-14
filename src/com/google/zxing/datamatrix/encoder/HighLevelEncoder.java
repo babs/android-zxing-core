@@ -16,9 +16,9 @@
 
 package com.google.zxing.datamatrix.encoder;
 
-import com.google.zxing.Dimension;
-
 import java.util.Arrays;
+
+import com.google.zxing.Dimension;
 
 /**
  * DataMatrix ECC 200 data encoder following the algorithm described in ISO/IEC

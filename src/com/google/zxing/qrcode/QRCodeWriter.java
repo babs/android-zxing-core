@@ -16,17 +16,17 @@
 
 package com.google.zxing.qrcode;
 
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.Writer;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.encoder.ByteMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.google.zxing.qrcode.encoder.ByteMatrix;
 import com.google.zxing.qrcode.encoder.Encoder;
 import com.google.zxing.qrcode.encoder.QRCode;
-
-import java.util.Map;
 
 /**
  * This object renders a QR Code as a BitMatrix 2D array of greyscale values.
@@ -48,7 +48,7 @@ public final class QRCodeWriter implements Writer {
 	public BitMatrix encode(String contents, BarcodeFormat format, int width,
 			int height, Map<EncodeHintType, ?> hints) throws WriterException {
 
-		if (contents.isEmpty()) {
+		if ("".equals(contents)) {
 			throw new IllegalArgumentException("Found empty contents");
 		}
 

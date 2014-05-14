@@ -16,6 +16,13 @@
 
 package com.google.zxing.multi.qrcode.detector;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.ResultPoint;
@@ -24,13 +31,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.detector.FinderPattern;
 import com.google.zxing.qrcode.detector.FinderPatternFinder;
 import com.google.zxing.qrcode.detector.FinderPatternInfo;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -158,8 +158,10 @@ final class MultiFinderPatternFinder extends FinderPatternFinder {
 		 * decode.
 		 */
 
-		List<FinderPattern[]> results = new ArrayList<>(); // holder for the
-															// results
+		List<FinderPattern[]> results = new ArrayList<FinderPattern[]>(); // holder
+																			// for
+																			// the
+																			// results
 
 		for (int i1 = 0; i1 < (size - 2); i1++) {
 			FinderPattern p1 = possibleCenters.get(i1);
@@ -337,7 +339,7 @@ final class MultiFinderPatternFinder extends FinderPatternFinder {
 			} // end if foundPatternCross
 		} // for i=iSkip-1 ...
 		FinderPattern[][] patternInfo = selectMutipleBestPatterns();
-		List<FinderPatternInfo> result = new ArrayList<>();
+		List<FinderPatternInfo> result = new ArrayList<FinderPatternInfo>();
 		for (FinderPattern[] pattern : patternInfo) {
 			ResultPoint.orderBestPatterns(pattern);
 			result.add(new FinderPatternInfo(pattern));
@@ -349,4 +351,5 @@ final class MultiFinderPatternFinder extends FinderPatternFinder {
 			return result.toArray(new FinderPatternInfo[result.size()]);
 		}
 	}
+
 }

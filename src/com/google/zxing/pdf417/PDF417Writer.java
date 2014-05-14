@@ -16,6 +16,9 @@
 
 package com.google.zxing.pdf417;
 
+import java.nio.charset.Charset;
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.Writer;
@@ -24,9 +27,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.pdf417.encoder.Compaction;
 import com.google.zxing.pdf417.encoder.Dimensions;
 import com.google.zxing.pdf417.encoder.PDF417;
-
-import java.nio.charset.Charset;
-import java.util.Map;
 
 /**
  * @author Jacob Haynes

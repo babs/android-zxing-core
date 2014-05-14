@@ -16,6 +16,9 @@
 
 package com.google.zxing.aztec;
 
+import java.util.List;
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
@@ -29,9 +32,6 @@ import com.google.zxing.ResultPointCallback;
 import com.google.zxing.aztec.decoder.Decoder;
 import com.google.zxing.aztec.detector.Detector;
 import com.google.zxing.common.DecoderResult;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * This implementation can detect and decode Aztec codes in an image.
@@ -78,7 +78,15 @@ public final class AztecReader implements Reader {
 				AztecDetectorResult detectorResult = detector.detect(true);
 				points = detectorResult.getPoints();
 				decoderResult = new Decoder().decode(detectorResult);
-			} catch (NotFoundException | FormatException e) {
+			} catch (FormatException e) {
+				if (notFoundException != null) {
+					throw notFoundException;
+				}
+				if (formatException != null) {
+					throw formatException;
+				}
+				throw e;
+			} catch (NotFoundException e) {
 				if (notFoundException != null) {
 					throw notFoundException;
 				}

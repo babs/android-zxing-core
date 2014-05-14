@@ -16,6 +16,10 @@
 
 package com.google.zxing.oned;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.DecodeHintType;
@@ -24,10 +28,6 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.common.BitArray;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -247,7 +247,7 @@ public final class Code128Reader extends OneDReader {
 		int[] startPatternInfo = findStartPattern(row);
 		int startCode = startPatternInfo[2];
 
-		List<Byte> rawCodes = new ArrayList<>(20);
+		List<Byte> rawCodes = new ArrayList<Byte>(20);
 		rawCodes.add((byte) startCode);
 
 		int codeSet;
@@ -559,4 +559,5 @@ public final class Code128Reader extends OneDReader {
 				BarcodeFormat.CODE_128);
 
 	}
+
 }

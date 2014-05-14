@@ -16,15 +16,16 @@
 
 package com.google.zxing.aztec;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.Writer;
 import com.google.zxing.aztec.encoder.AztecCode;
 import com.google.zxing.aztec.encoder.Encoder;
 import com.google.zxing.common.BitMatrix;
-
-import java.nio.charset.Charset;
-import java.util.Map;
 
 public final class AztecWriter implements Writer {
 
@@ -64,8 +65,14 @@ public final class AztecWriter implements Writer {
 			throw new IllegalArgumentException(
 					"Can only encode AZTEC, but got " + format);
 		}
-		AztecCode aztec = Encoder.encode(contents.getBytes(charset),
-				eccPercent, layers);
+		AztecCode aztec = null;
+		try {
+			aztec = Encoder.encode(contents.getBytes(charset.name()),
+					eccPercent, layers);
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalArgumentException("UnsupportedEncodingException",
+					e);
+		}
 		return renderResult(aztec, width, height);
 	}
 

@@ -16,16 +16,15 @@
 
 package com.google.zxing.client.result;
 
-import com.google.zxing.Result;
-
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.google.zxing.Result;
 
 /**
  * Parses contact information formatted according to the VCard (2.1) format.
@@ -145,7 +144,7 @@ public final class VCardResultParser extends ResultParser {
 			if (metadataString != null) {
 				for (String metadatum : SEMICOLON.split(metadataString)) {
 					if (metadata == null) {
-						metadata = new ArrayList<>(1);
+						metadata = new ArrayList<String>(1);
 					}
 					metadata.add(metadatum);
 					String[] metadatumTokens = EQUALS.split(metadatum, 2);
@@ -191,7 +190,7 @@ public final class VCardResultParser extends ResultParser {
 			} else if (i > matchStart) {
 				// found a match
 				if (matches == null) {
-					matches = new ArrayList<>(1); // lazy init
+					matches = new ArrayList<List<String>>(1); // lazy init
 				}
 				if (i >= 1 && rawText.charAt(i - 1) == '\r') {
 					i--; // Back up over \r, which really should be there
@@ -217,7 +216,7 @@ public final class VCardResultParser extends ResultParser {
 					element = VCARD_ESCAPES.matcher(element).replaceAll("$1");
 				}
 				if (metadata == null) {
-					List<String> match = new ArrayList<>(1);
+					List<String> match = new ArrayList<String>(1);
 					match.add(element);
 					matches.add(match);
 				} else {
@@ -277,13 +276,16 @@ public final class VCardResultParser extends ResultParser {
 			byte[] fragmentBytes = fragmentBuffer.toByteArray();
 			String fragment;
 			if (charset == null) {
-				fragment = new String(fragmentBytes, Charset.forName("UTF-8"));
+				try {
+					fragment = new String(fragmentBytes,"UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					fragment = new String(fragmentBytes);
+				}
 			} else {
 				try {
 					fragment = new String(fragmentBytes, charset);
 				} catch (UnsupportedEncodingException e) {
-					fragment = new String(fragmentBytes,
-							Charset.forName("UTF-8"));
+					fragment = new String(fragmentBytes);
 				}
 			}
 			fragmentBuffer.reset();
@@ -306,10 +308,10 @@ public final class VCardResultParser extends ResultParser {
 		if (lists == null || lists.isEmpty()) {
 			return null;
 		}
-		List<String> result = new ArrayList<>(lists.size());
+		List<String> result = new ArrayList<String>(lists.size());
 		for (List<String> list : lists) {
 			String value = list.get(0);
-			if (value != null && !value.isEmpty()) {
+			if (!"".equals(value)) {
 				result.add(value);
 			}
 		}
@@ -320,7 +322,7 @@ public final class VCardResultParser extends ResultParser {
 		if (lists == null || lists.isEmpty()) {
 			return null;
 		}
-		List<String> result = new ArrayList<>(lists.size());
+		List<String> result = new ArrayList<String>(lists.size());
 		for (List<String> list : lists) {
 			String type = null;
 			for (int i = 1; i < list.size(); i++) {
@@ -380,7 +382,7 @@ public final class VCardResultParser extends ResultParser {
 
 	private static void maybeAppendComponent(String[] components, int i,
 			StringBuilder newName) {
-		if (components[i] != null && !components[i].isEmpty()) {
+		if (!"".equals(components[i])) {
 			if (newName.length() > 0) {
 				newName.append(' ');
 			}

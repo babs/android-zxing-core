@@ -94,7 +94,8 @@ public final class Result {
 
 	public void putMetadata(ResultMetadataType type, Object value) {
 		if (resultMetadata == null) {
-			resultMetadata = new EnumMap<>(ResultMetadataType.class);
+			resultMetadata = new EnumMap<ResultMetadataType, Object>(
+					ResultMetadataType.class);
 		}
 		resultMetadata.put(type, value);
 	}

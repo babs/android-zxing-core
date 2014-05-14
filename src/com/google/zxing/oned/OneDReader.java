@@ -16,6 +16,10 @@
 
 package com.google.zxing.oned;
 
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
+
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.DecodeHintType;
@@ -27,10 +31,6 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.common.BitArray;
-
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
 
 /**
  * Encapsulates functionality and implementation that is common to all families
@@ -168,7 +168,7 @@ public abstract class OneDReader implements Reader {
 					// that start on the center line.
 					if (hints != null
 							&& hints.containsKey(DecodeHintType.NEED_RESULT_POINT_CALLBACK)) {
-						Map<DecodeHintType, Object> newHints = new EnumMap<>(
+						Map<DecodeHintType, Object> newHints = new EnumMap<DecodeHintType, Object>(
 								DecodeHintType.class);
 						newHints.putAll(hints);
 						newHints.remove(DecodeHintType.NEED_RESULT_POINT_CALLBACK);

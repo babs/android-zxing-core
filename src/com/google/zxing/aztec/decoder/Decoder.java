@@ -16,6 +16,8 @@
 
 package com.google.zxing.aztec.decoder;
 
+import java.util.Arrays;
+
 import com.google.zxing.FormatException;
 import com.google.zxing.aztec.AztecDetectorResult;
 import com.google.zxing.common.BitMatrix;
@@ -23,8 +25,6 @@ import com.google.zxing.common.DecoderResult;
 import com.google.zxing.common.reedsolomon.GenericGF;
 import com.google.zxing.common.reedsolomon.ReedSolomonDecoder;
 import com.google.zxing.common.reedsolomon.ReedSolomonException;
-
-import java.util.Arrays;
 
 /**
  * <p>

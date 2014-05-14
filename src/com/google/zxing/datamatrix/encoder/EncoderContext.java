@@ -16,9 +16,9 @@
 
 package com.google.zxing.datamatrix.encoder;
 
-import com.google.zxing.Dimension;
+import java.io.UnsupportedEncodingException;
 
-import java.nio.charset.Charset;
+import com.google.zxing.Dimension;
 
 final class EncoderContext {
 
@@ -34,7 +34,13 @@ final class EncoderContext {
 
 	EncoderContext(String msg) {
 		// From this point on Strings are not Unicode anymore!
-		byte[] msgBinary = msg.getBytes(Charset.forName("ISO-8859-1"));
+		byte[] msgBinary = null;
+		try {
+			msgBinary = msg.getBytes("ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalArgumentException("UnsupportedEncodingException",
+					e);
+		}
 		StringBuilder sb = new StringBuilder(msgBinary.length);
 		for (int i = 0, c = msgBinary.length; i < c; i++) {
 			char ch = (char) (msgBinary[i] & 0xff);

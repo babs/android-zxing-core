@@ -16,6 +16,8 @@
 
 package com.google.zxing;
 
+import java.util.Map;
+
 import com.google.zxing.aztec.AztecWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.datamatrix.DataMatrixWriter;
@@ -28,8 +30,6 @@ import com.google.zxing.oned.ITFWriter;
 import com.google.zxing.oned.UPCAWriter;
 import com.google.zxing.pdf417.PDF417Writer;
 import com.google.zxing.qrcode.QRCodeWriter;
-
-import java.util.Map;
 
 /**
  * This is a factory class which finds the appropriate Writer subclass for the

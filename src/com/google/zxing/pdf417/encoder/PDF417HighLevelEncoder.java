@@ -20,14 +20,15 @@
 
 package com.google.zxing.pdf417.encoder;
 
-import com.google.zxing.WriterException;
-import com.google.zxing.common.CharacterSetECI;
-
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
 import java.util.List;
+
+import com.google.zxing.WriterException;
+import com.google.zxing.common.CharacterSetECI;
 
 /**
  * PDF417 high-level encoder following the algorithm described in ISO/IEC
@@ -173,7 +174,7 @@ final class PDF417HighLevelEncoder {
 		StringBuilder sb = new StringBuilder(msg.length());
 
 		if (encoding != null
-				|| !DEFAULT_ENCODING_NAMES.contains(encoding.name())) {
+				&& !DEFAULT_ENCODING_NAMES.contains(encoding.name())) {
 			CharacterSetECI eci = CharacterSetECI
 					.getCharacterSetECIByName(encoding.name());
 			if (eci != null) {
@@ -264,7 +265,11 @@ final class PDF417HighLevelEncoder {
 						+ DEFAULT_ENCODING_NAMES);
 			}
 		}
-		return msg.getBytes(encoding);
+		try {
+			return msg.getBytes(encoding.name());
+		} catch (UnsupportedEncodingException e) {
+			return new byte[] {};
+		}
 	}
 
 	/**

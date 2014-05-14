@@ -16,6 +16,11 @@
 
 package com.google.zxing.pdf417.decoder;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Formatter;
+import java.util.List;
+
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
 import com.google.zxing.NotFoundException;
@@ -24,11 +29,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.DecoderResult;
 import com.google.zxing.pdf417.PDF417Common;
 import com.google.zxing.pdf417.decoder.ec.ErrorCorrection;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Formatter;
-import java.util.List;
 
 /**
  * @author Guenther Grau
@@ -283,11 +283,11 @@ public final class PDF417ScanningDecoder {
 			ChecksumException, NotFoundException {
 		BarcodeValue[][] barcodeMatrix = createBarcodeMatrix(detectionResult);
 		adjustCodewordCount(detectionResult, barcodeMatrix);
-		Collection<Integer> erasures = new ArrayList<>();
+		Collection<Integer> erasures = new ArrayList<Integer>();
 		int[] codewords = new int[detectionResult.getBarcodeRowCount()
 				* detectionResult.getBarcodeColumnCount()];
-		List<int[]> ambiguousIndexValuesList = new ArrayList<>();
-		List<Integer> ambiguousIndexesList = new ArrayList<>();
+		List<int[]> ambiguousIndexValuesList = new ArrayList<int[]>();
+		List<Integer> ambiguousIndexesList = new ArrayList<Integer>();
 		for (int row = 0; row < detectionResult.getBarcodeRowCount(); row++) {
 			for (int column = 0; column < detectionResult
 					.getBarcodeColumnCount(); column++) {

@@ -16,19 +16,19 @@
 
 package com.google.zxing.pdf417.decoder;
 
-import com.google.zxing.pdf417.PDF417Common;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.zxing.pdf417.PDF417Common;
+
 /**
  * @author Guenther Grau
  */
 final class BarcodeValue {
-	private final Map<Integer, Integer> values = new HashMap<>();
+	private final Map<Integer, Integer> values = new HashMap<Integer, Integer>();
 
 	/**
 	 * Add an occurrence of a value
@@ -51,7 +51,7 @@ final class BarcodeValue {
 	 */
 	int[] getValue() {
 		int maxConfidence = -1;
-		Collection<Integer> result = new ArrayList<>();
+		Collection<Integer> result = new ArrayList<Integer>();
 		for (Entry<Integer, Integer> entry : values.entrySet()) {
 			if (entry.getValue() > maxConfidence) {
 				maxConfidence = entry.getValue();

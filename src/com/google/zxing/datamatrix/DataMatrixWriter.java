@@ -16,19 +16,19 @@
 
 package com.google.zxing.datamatrix;
 
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.Dimension;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.Writer;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.datamatrix.encoder.DefaultPlacement;
-import com.google.zxing.Dimension;
 import com.google.zxing.datamatrix.encoder.ErrorCorrection;
 import com.google.zxing.datamatrix.encoder.HighLevelEncoder;
 import com.google.zxing.datamatrix.encoder.SymbolInfo;
 import com.google.zxing.datamatrix.encoder.SymbolShapeHint;
 import com.google.zxing.qrcode.encoder.ByteMatrix;
-
-import java.util.Map;
 
 /**
  * This object renders a Data Matrix code as a BitMatrix 2D array of greyscale
@@ -49,7 +49,7 @@ public final class DataMatrixWriter implements Writer {
 	public BitMatrix encode(String contents, BarcodeFormat format, int width,
 			int height, Map<EncodeHintType, ?> hints) {
 
-		if (contents.isEmpty()) {
+		if ("".equals(contents)) {
 			throw new IllegalArgumentException("Found empty contents");
 		}
 

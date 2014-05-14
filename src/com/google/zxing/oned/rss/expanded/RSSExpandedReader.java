@@ -26,6 +26,12 @@
 
 package com.google.zxing.oned.rss.expanded;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
@@ -38,12 +44,6 @@ import com.google.zxing.oned.rss.DataCharacter;
 import com.google.zxing.oned.rss.FinderPattern;
 import com.google.zxing.oned.rss.RSSUtils;
 import com.google.zxing.oned.rss.expanded.decoders.AbstractExpandedDecoder;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Collections;
 
 /**
  * @author Pablo Orduña, University of Deusto (pablo.orduna@deusto.es)
@@ -122,8 +122,9 @@ public final class RSSExpandedReader extends AbstractRSSReader {
 
 	private static final int MAX_PAIRS = 11;
 
-	private final List<ExpandedPair> pairs = new ArrayList<>(MAX_PAIRS);
-	private final List<ExpandedRow> rows = new ArrayList<>();
+	private final List<ExpandedPair> pairs = new ArrayList<ExpandedPair>(
+			MAX_PAIRS);
+	private final List<ExpandedRow> rows = new ArrayList<ExpandedRow>();
 	private final int[] startEnd = new int[2];
 	// private final int [] currentSequence = new int[LONGEST_SEQUENCE_SIZE];
 	private boolean startFromEven = false;
@@ -249,7 +250,7 @@ public final class RSSExpandedReader extends AbstractRSSReader {
 				return this.pairs;
 			}
 
-			List<ExpandedRow> rs = new ArrayList<>();
+			List<ExpandedRow> rs = new ArrayList<ExpandedRow>();
 			rs.addAll(collectedRows);
 			rs.add(row);
 			try {

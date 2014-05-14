@@ -16,6 +16,10 @@
 
 package com.google.zxing.multi.qrcode.detector;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.ReaderException;
@@ -24,10 +28,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.DetectorResult;
 import com.google.zxing.qrcode.detector.Detector;
 import com.google.zxing.qrcode.detector.FinderPatternInfo;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -60,7 +60,7 @@ public final class MultiDetector extends Detector {
 			throw NotFoundException.getNotFoundInstance();
 		}
 
-		List<DetectorResult> result = new ArrayList<>();
+		List<DetectorResult> result = new ArrayList<DetectorResult>();
 		for (FinderPatternInfo info : infos) {
 			try {
 				result.add(processFinderPatternInfo(info));
@@ -74,4 +74,5 @@ public final class MultiDetector extends Detector {
 			return result.toArray(new DetectorResult[result.size()]);
 		}
 	}
+
 }

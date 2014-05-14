@@ -16,9 +16,9 @@
 
 package com.google.zxing.pdf417.decoder;
 
-import com.google.zxing.pdf417.PDF417Common;
-
 import java.util.Formatter;
+
+import com.google.zxing.pdf417.PDF417Common;
 
 /**
  * @author Guenther Grau

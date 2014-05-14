@@ -16,9 +16,9 @@
 
 package com.google.zxing.client.result;
 
-import com.google.zxing.Result;
-
 import java.util.Map;
+
+import com.google.zxing.Result;
 
 /**
  * Represents a result that encodes an e-mail address, either as a plain address
@@ -45,7 +45,7 @@ public final class EmailAddressResultParser extends ResultParser {
 			String subject = null;
 			String body = null;
 			if (nameValues != null) {
-				if (emailAddress.isEmpty()) {
+				if ("".equals(emailAddress)) {
 					emailAddress = nameValues.get("to");
 				}
 				subject = nameValues.get("subject");

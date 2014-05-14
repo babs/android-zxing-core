@@ -16,18 +16,18 @@
 
 package com.google.zxing.qrcode.detector;
 
-import com.google.zxing.DecodeHintType;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.ResultPoint;
-import com.google.zxing.ResultPointCallback;
-import com.google.zxing.common.BitMatrix;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+
+import com.google.zxing.DecodeHintType;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.ResultPoint;
+import com.google.zxing.ResultPointCallback;
+import com.google.zxing.common.BitMatrix;
 
 /**
  * <p>
@@ -71,7 +71,7 @@ public class FinderPatternFinder {
 	public FinderPatternFinder(BitMatrix image,
 			ResultPointCallback resultPointCallback) {
 		this.image = image;
-		this.possibleCenters = new ArrayList<>();
+		this.possibleCenters = new ArrayList<FinderPattern>();
 		this.crossCheckStateCount = new int[5];
 		this.resultPointCallback = resultPointCallback;
 	}

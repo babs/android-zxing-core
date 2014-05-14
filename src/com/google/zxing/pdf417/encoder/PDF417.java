@@ -20,9 +20,9 @@
 
 package com.google.zxing.pdf417.encoder;
 
-import com.google.zxing.WriterException;
-
 import java.nio.charset.Charset;
+
+import com.google.zxing.WriterException;
 
 /**
  * Top-level class for the logic part of the PDF417 implementation.

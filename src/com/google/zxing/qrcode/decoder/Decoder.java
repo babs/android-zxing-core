@@ -16,6 +16,8 @@
 
 package com.google.zxing.qrcode.decoder;
 
+import java.util.Map;
+
 import com.google.zxing.ChecksumException;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
@@ -24,8 +26,6 @@ import com.google.zxing.common.DecoderResult;
 import com.google.zxing.common.reedsolomon.GenericGF;
 import com.google.zxing.common.reedsolomon.ReedSolomonDecoder;
 import com.google.zxing.common.reedsolomon.ReedSolomonException;
-
-import java.util.Map;
 
 /**
  * <p>
@@ -145,7 +145,17 @@ public final class Decoder {
 
 			return result;
 
-		} catch (FormatException | ChecksumException e) {
+		} catch (ChecksumException e) {
+			// Throw the exception from the original reading
+			if (fe != null) {
+				throw fe;
+			}
+			if (ce != null) {
+				throw ce;
+			}
+			throw e;
+
+		} catch (FormatException e) {
 			// Throw the exception from the original reading
 			if (fe != null) {
 				throw fe;

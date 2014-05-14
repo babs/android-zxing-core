@@ -16,6 +16,10 @@
 
 package com.google.zxing.pdf417;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -31,10 +35,6 @@ import com.google.zxing.multi.MultipleBarcodeReader;
 import com.google.zxing.pdf417.decoder.PDF417ScanningDecoder;
 import com.google.zxing.pdf417.detector.Detector;
 import com.google.zxing.pdf417.detector.PDF417DetectorResult;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This implementation can detect and decode PDF417 codes in an image.
@@ -78,7 +78,9 @@ public final class PDF417Reader implements Reader, MultipleBarcodeReader {
 			Map<DecodeHintType, ?> hints) throws NotFoundException {
 		try {
 			return decode(image, hints, true);
-		} catch (FormatException | ChecksumException ignored) {
+		} catch (FormatException ignored) {
+			throw NotFoundException.getNotFoundInstance();
+		} catch (ChecksumException ignored) {
 			throw NotFoundException.getNotFoundInstance();
 		}
 	}
@@ -86,7 +88,7 @@ public final class PDF417Reader implements Reader, MultipleBarcodeReader {
 	private static Result[] decode(BinaryBitmap image,
 			Map<DecodeHintType, ?> hints, boolean multiple)
 			throws NotFoundException, FormatException, ChecksumException {
-		List<Result> results = new ArrayList<>();
+		List<Result> results = new ArrayList<Result>();
 		PDF417DetectorResult detectorResult = Detector.detect(image, hints,
 				multiple);
 		for (ResultPoint[] points : detectorResult.getPoints()) {

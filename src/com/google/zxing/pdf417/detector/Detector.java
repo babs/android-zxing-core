@@ -16,16 +16,16 @@
 
 package com.google.zxing.pdf417.detector;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.common.BitMatrix;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -119,7 +119,7 @@ public final class Detector {
 	 */
 	private static List<ResultPoint[]> detect(boolean multiple,
 			BitMatrix bitMatrix) {
-		List<ResultPoint[]> barcodeCoordinates = new ArrayList<>();
+		List<ResultPoint[]> barcodeCoordinates = new ArrayList<ResultPoint[]>();
 		int row = 0;
 		int column = 0;
 		boolean foundBarcodeInRow = false;

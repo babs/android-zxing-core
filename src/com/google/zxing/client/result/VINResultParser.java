@@ -16,10 +16,10 @@
 
 package com.google.zxing.client.result;
 
+import java.util.regex.Pattern;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-
-import java.util.regex.Pattern;
 
 /**
  * Detects a result that is likely a vehicle identification number.

@@ -16,14 +16,14 @@
 
 package com.google.zxing.datamatrix.decoder;
 
-import com.google.zxing.FormatException;
-import com.google.zxing.common.BitSource;
-import com.google.zxing.common.DecoderResult;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import com.google.zxing.FormatException;
+import com.google.zxing.common.BitSource;
+import com.google.zxing.common.DecoderResult;
 
 /**
  * <p>
@@ -80,7 +80,7 @@ final class DecodedBitStreamParser {
 		BitSource bits = new BitSource(bytes);
 		StringBuilder result = new StringBuilder(100);
 		StringBuilder resultTrailer = new StringBuilder(0);
-		List<byte[]> byteSegments = new ArrayList<>(1);
+		List<byte[]> byteSegments = new ArrayList<byte[]>(1);
 		Mode mode = Mode.ASCII_ENCODE;
 		do {
 			if (mode == Mode.ASCII_ENCODE) {

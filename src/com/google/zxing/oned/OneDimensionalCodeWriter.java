@@ -16,13 +16,13 @@
 
 package com.google.zxing.oned;
 
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.Writer;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-
-import java.util.Map;
 
 /**
  * <p>
@@ -51,7 +51,7 @@ public abstract class OneDimensionalCodeWriter implements Writer {
 	@Override
 	public BitMatrix encode(String contents, BarcodeFormat format, int width,
 			int height, Map<EncodeHintType, ?> hints) throws WriterException {
-		if (contents.isEmpty()) {
+		if ("".equals(contents)) {
 			throw new IllegalArgumentException("Found empty contents");
 		}
 

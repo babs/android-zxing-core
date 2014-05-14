@@ -16,14 +16,14 @@
 
 package com.google.zxing.oned;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * This object renders a CODE128 code as a {@link BitMatrix}.
@@ -85,8 +85,9 @@ public final class Code128Writer extends OneDimensionalCodeWriter {
 			}
 		}
 
-		Collection<int[]> patterns = new ArrayList<>(); // temporary storage for
-														// patterns
+		Collection<int[]> patterns = new ArrayList<int[]>(); // temporary
+																// storage for
+																// patterns
 		int checkSum = 0;
 		int checkWeight = 1;
 		int codeSet = 0; // selected code (CODE_CODE_B or CODE_CODE_C)

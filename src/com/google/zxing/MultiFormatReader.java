@@ -16,16 +16,16 @@
 
 package com.google.zxing;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+
 import com.google.zxing.aztec.AztecReader;
 import com.google.zxing.datamatrix.DataMatrixReader;
 import com.google.zxing.maxicode.MaxiCodeReader;
 import com.google.zxing.oned.MultiFormatOneDReader;
 import com.google.zxing.pdf417.PDF417Reader;
 import com.google.zxing.qrcode.QRCodeReader;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * MultiFormatReader is a convenience class and the main entry point into the
@@ -114,7 +114,7 @@ public final class MultiFormatReader implements Reader {
 		Collection<BarcodeFormat> formats = hints == null ? null
 				: (Collection<BarcodeFormat>) hints
 						.get(DecodeHintType.POSSIBLE_FORMATS);
-		Collection<Reader> readers = new ArrayList<>();
+		Collection<Reader> readers = new ArrayList<Reader>();
 		if (formats != null) {
 			boolean addOneDReader = formats.contains(BarcodeFormat.UPC_A)
 					|| formats.contains(BarcodeFormat.UPC_E)

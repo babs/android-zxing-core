@@ -16,8 +16,6 @@
 
 package com.google.zxing.client.result;
 
-import com.google.zxing.Result;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -25,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import com.google.zxing.Result;
 
 /**
  * <p>
@@ -165,7 +165,7 @@ public abstract class ResultParser {
 		if (paramStart < 0) {
 			return null;
 		}
-		Map<String, String> result = new HashMap<>(3);
+		Map<String, String> result = new HashMap<String, String>(3);
 		for (String keyValue : AMPERSAND.split(uri.substring(paramStart + 1))) {
 			appendKeyValue(keyValue, result);
 		}
@@ -221,14 +221,14 @@ public abstract class ResultParser {
 				} else {
 					// found a match
 					if (matches == null) {
-						matches = new ArrayList<>(3); // lazy init
+						matches = new ArrayList<String>(3); // lazy init
 					}
 					String element = unescapeBackslash(rawText.substring(start,
 							i));
 					if (trim) {
 						element = element.trim();
 					}
-					if (!element.isEmpty()) {
+					if (!"".equals(element)) {
 						matches.add(element);
 					}
 					i++;

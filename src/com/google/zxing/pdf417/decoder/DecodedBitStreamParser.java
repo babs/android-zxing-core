@@ -16,12 +16,11 @@
 
 package com.google.zxing.pdf417.decoder;
 
+import java.math.BigInteger;
+
 import com.google.zxing.FormatException;
 import com.google.zxing.common.DecoderResult;
 import com.google.zxing.pdf417.PDF417ResultMetadata;
-
-import java.math.BigInteger;
-import java.util.Arrays;
 
 /**
  * <p>
@@ -177,14 +176,36 @@ final class DecodedBitStreamParser {
 				}
 			}
 
-			resultMetadata.setOptionalData(Arrays.copyOf(
-					additionalOptionCodeWords, additionalOptionCodeWordsIndex));
+			resultMetadata.setOptionalData(copyOf(additionalOptionCodeWords,
+					additionalOptionCodeWordsIndex));
 		} else if (codewords[codeIndex] == MACRO_PDF417_TERMINATOR) {
 			resultMetadata.setLastSegment(true);
 			codeIndex++;
 		}
 
 		return codeIndex;
+	}
+
+	public static int[] copyOf(int[] original, int newLength) {
+		if (newLength < 0) {
+			throw new NegativeArraySizeException(Integer.toString(newLength));
+		}
+		return copyOfRange(original, 0, newLength);
+	}
+
+	public static int[] copyOfRange(int[] original, int start, int end) {
+		if (start > end) {
+			throw new IllegalArgumentException();
+		}
+		int originalLength = original.length;
+		if (start < 0 || start > originalLength) {
+			throw new ArrayIndexOutOfBoundsException();
+		}
+		int resultLength = end - start;
+		int copyLength = Math.min(resultLength, originalLength - start);
+		int[] result = new int[resultLength];
+		System.arraycopy(original, start, result, 0, copyLength);
+		return result;
 	}
 
 	/**

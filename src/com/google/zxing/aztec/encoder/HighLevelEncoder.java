@@ -16,8 +16,6 @@
 
 package com.google.zxing.aztec.encoder;
 
-import com.google.zxing.common.BitArray;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,6 +23,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.google.zxing.common.BitArray;
 
 /**
  * This produces nearly optimal encodings of text into the first-level of
@@ -188,7 +188,7 @@ public final class HighLevelEncoder {
 	// non-optimal states.
 	private Collection<State> updateStateListForChar(Iterable<State> states,
 			int index) {
-		Collection<State> result = new LinkedList<>();
+		Collection<State> result = new LinkedList<State>();
 		for (State state : states) {
 			updateStateForChar(state, index, result);
 		}
@@ -252,7 +252,7 @@ public final class HighLevelEncoder {
 
 	private static Collection<State> updateStateListForPair(
 			Iterable<State> states, int index, int pairCode) {
-		Collection<State> result = new LinkedList<>();
+		Collection<State> result = new LinkedList<State>();
 		for (State state : states) {
 			updateStateForPair(state, index, pairCode, result);
 		}
@@ -288,7 +288,7 @@ public final class HighLevelEncoder {
 	}
 
 	private static Collection<State> simplifyStates(Iterable<State> states) {
-		List<State> result = new LinkedList<>();
+		List<State> result = new LinkedList<State>();
 		for (State newState : states) {
 			boolean add = true;
 			for (Iterator<State> iterator = result.iterator(); iterator
@@ -308,4 +308,5 @@ public final class HighLevelEncoder {
 		}
 		return result;
 	}
+
 }

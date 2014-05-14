@@ -16,10 +16,10 @@
 
 package com.google.zxing.client.result;
 
-import com.google.zxing.Result;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.zxing.Result;
 
 /**
  * Implements the "BIZCARD" address book entry format, though this has been
@@ -62,7 +62,7 @@ public final class BizcardResultParser extends AbstractDoCoMoResultParser {
 
 	private static String[] buildPhoneNumbers(String number1, String number2,
 			String number3) {
-		List<String> numbers = new ArrayList<>(3);
+		List<String> numbers = new ArrayList<String>(3);
 		if (number1 != null) {
 			numbers.add(number1);
 		}

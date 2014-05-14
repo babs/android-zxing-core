@@ -16,10 +16,10 @@
 
 package com.google.zxing.pdf417.detector;
 
+import java.util.List;
+
 import com.google.zxing.ResultPoint;
 import com.google.zxing.common.BitMatrix;
-
-import java.util.List;
 
 /**
  * @author Guenther Grau

@@ -16,18 +16,18 @@
 
 package com.google.zxing.qrcode.decoder;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
 import com.google.zxing.common.BitSource;
 import com.google.zxing.common.CharacterSetECI;
 import com.google.zxing.common.DecoderResult;
 import com.google.zxing.common.StringUtils;
-
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -61,7 +61,7 @@ final class DecodedBitStreamParser {
 			throws FormatException {
 		BitSource bits = new BitSource(bytes);
 		StringBuilder result = new StringBuilder(50);
-		List<byte[]> byteSegments = new ArrayList<>(1);
+		List<byte[]> byteSegments = new ArrayList<byte[]>(1);
 		int symbolSequence = -1;
 		int parityData = -1;
 

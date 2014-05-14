@@ -16,14 +16,6 @@
 
 package com.google.zxing.datamatrix.detector;
 
-import com.google.zxing.NotFoundException;
-import com.google.zxing.ResultPoint;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.common.DetectorResult;
-import com.google.zxing.common.GridSampler;
-import com.google.zxing.common.detector.MathUtils;
-import com.google.zxing.common.detector.WhiteRectangleDetector;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +23,14 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.zxing.NotFoundException;
+import com.google.zxing.ResultPoint;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.DetectorResult;
+import com.google.zxing.common.GridSampler;
+import com.google.zxing.common.detector.MathUtils;
+import com.google.zxing.common.detector.WhiteRectangleDetector;
 
 /**
  * <p>
@@ -71,7 +71,8 @@ public final class Detector {
 		// Point A and D are across the diagonal from one another,
 		// as are B and C. Figure out which are the solid black lines
 		// by counting transitions
-		List<ResultPointsAndTransitions> transitions = new ArrayList<>(4);
+		List<ResultPointsAndTransitions> transitions = new ArrayList<ResultPointsAndTransitions>(
+				4);
 		transitions.add(transitionsBetween(pointA, pointB));
 		transitions.add(transitionsBetween(pointA, pointC));
 		transitions.add(transitionsBetween(pointB, pointD));
@@ -88,7 +89,7 @@ public final class Detector {
 		// Figure out which point is their intersection by tallying up the
 		// number of times we see the
 		// endpoints in the four endpoints. One will show up twice.
-		Map<ResultPoint, Integer> pointCount = new HashMap<>();
+		Map<ResultPoint, Integer> pointCount = new HashMap<ResultPoint, Integer>();
 		increment(pointCount, lSideOne.getFrom());
 		increment(pointCount, lSideOne.getTo());
 		increment(pointCount, lSideTwo.getFrom());
