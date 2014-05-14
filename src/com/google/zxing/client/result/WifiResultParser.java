@@ -19,33 +19,40 @@ package com.google.zxing.client.result;
 import com.google.zxing.Result;
 
 /**
- * <p>Parses a WIFI configuration string. Strings will be of the form:</p>
- *
- * <p>{@code WIFI:T:[network type];S:[network SSID];P:[network password];H:[hidden?];;}</p>
- *
- * <p>The fields can appear in any order. Only "S:" is required.</p>
- *
+ * <p>
+ * Parses a WIFI configuration string. Strings will be of the form:
+ * </p>
+ * 
+ * <p>
+ * {@code WIFI:T:[network type];S:[network SSID];P:[network password];H:[hidden?];;}
+ * </p>
+ * 
+ * <p>
+ * The fields can appear in any order. Only "S:" is required.
+ * </p>
+ * 
  * @author Vikram Aggarwal
  * @author Sean Owen
  */
 public final class WifiResultParser extends ResultParser {
 
-  @Override
-  public WifiParsedResult parse(Result result) {
-    String rawText = getMassagedText(result);
-    if (!rawText.startsWith("WIFI:")) {
-      return null;
-    }
-    String ssid = matchSinglePrefixedField("S:", rawText, ';', false);
-    if (ssid == null || ssid.isEmpty()) {
-      return null;
-    }
-    String pass = matchSinglePrefixedField("P:", rawText, ';', false);
-    String type = matchSinglePrefixedField("T:", rawText, ';', false);
-    if (type == null) {
-      type = "nopass";
-    }
-    boolean hidden = Boolean.parseBoolean(matchSinglePrefixedField("H:", rawText, ';', false));
-    return new WifiParsedResult(type, ssid, pass, hidden);
-  }
+	@Override
+	public WifiParsedResult parse(Result result) {
+		String rawText = getMassagedText(result);
+		if (!rawText.startsWith("WIFI:")) {
+			return null;
+		}
+		String ssid = matchSinglePrefixedField("S:", rawText, ';', false);
+		if (ssid == null || ssid.isEmpty()) {
+			return null;
+		}
+		String pass = matchSinglePrefixedField("P:", rawText, ';', false);
+		String type = matchSinglePrefixedField("T:", rawText, ';', false);
+		if (type == null) {
+			type = "nopass";
+		}
+		boolean hidden = Boolean.parseBoolean(matchSinglePrefixedField("H:",
+				rawText, ';', false));
+		return new WifiParsedResult(type, ssid, pass, hidden);
+	}
 }

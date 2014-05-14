@@ -19,33 +19,36 @@ package com.google.zxing.client.result;
 import com.google.zxing.Result;
 
 /**
- * <p>Parses an "smtp:" URI result, whose format is not standardized but appears to be like:
- * {@code smtp[:subject[:body]]}.</p>
- *
+ * <p>
+ * Parses an "smtp:" URI result, whose format is not standardized but appears to
+ * be like: {@code smtp[:subject[:body]]}.
+ * </p>
+ * 
  * @author Sean Owen
  */
 public final class SMTPResultParser extends ResultParser {
 
-  @Override
-  public EmailAddressParsedResult parse(Result result) {
-    String rawText = getMassagedText(result);
-    if (!(rawText.startsWith("smtp:") || rawText.startsWith("SMTP:"))) {
-      return null;
-    }
-    String emailAddress = rawText.substring(5);
-    String subject = null;
-    String body = null;
-    int colon = emailAddress.indexOf(':');
-    if (colon >= 0) {
-      subject = emailAddress.substring(colon + 1);
-      emailAddress = emailAddress.substring(0, colon);
-      colon = subject.indexOf(':');
-      if (colon >= 0) {
-        body = subject.substring(colon + 1);
-        subject = subject.substring(0, colon);
-      }
-    }
-    String mailtoURI = "mailto:" + emailAddress;
-    return new EmailAddressParsedResult(emailAddress, subject, body, mailtoURI);
-  }
+	@Override
+	public EmailAddressParsedResult parse(Result result) {
+		String rawText = getMassagedText(result);
+		if (!(rawText.startsWith("smtp:") || rawText.startsWith("SMTP:"))) {
+			return null;
+		}
+		String emailAddress = rawText.substring(5);
+		String subject = null;
+		String body = null;
+		int colon = emailAddress.indexOf(':');
+		if (colon >= 0) {
+			subject = emailAddress.substring(colon + 1);
+			emailAddress = emailAddress.substring(0, colon);
+			colon = subject.indexOf(':');
+			if (colon >= 0) {
+				body = subject.substring(colon + 1);
+				subject = subject.substring(0, colon);
+			}
+		}
+		String mailtoURI = "mailto:" + emailAddress;
+		return new EmailAddressParsedResult(emailAddress, subject, body,
+				mailtoURI);
+	}
 }

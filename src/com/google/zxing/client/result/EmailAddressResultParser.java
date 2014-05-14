@@ -23,41 +23,44 @@ import java.util.Map;
 /**
  * Represents a result that encodes an e-mail address, either as a plain address
  * like "joe@example.org" or a mailto: URL like "mailto:joe@example.org".
- *
+ * 
  * @author Sean Owen
  */
 public final class EmailAddressResultParser extends ResultParser {
 
-  @Override
-  public EmailAddressParsedResult parse(Result result) {
-    String rawText = getMassagedText(result);
-    String emailAddress;
-    if (rawText.startsWith("mailto:") || rawText.startsWith("MAILTO:")) {
-      // If it starts with mailto:, assume it is definitely trying to be an email address
-      emailAddress = rawText.substring(7);
-      int queryStart = emailAddress.indexOf('?');
-      if (queryStart >= 0) {
-        emailAddress = emailAddress.substring(0, queryStart);
-      }
-      emailAddress = urlDecode(emailAddress);
-      Map<String,String> nameValues = parseNameValuePairs(rawText);
-      String subject = null;
-      String body = null;
-      if (nameValues != null) {
-        if (emailAddress.isEmpty()) {
-          emailAddress = nameValues.get("to");
-        }
-        subject = nameValues.get("subject");
-        body = nameValues.get("body");
-      }
-      return new EmailAddressParsedResult(emailAddress, subject, body, rawText);
-    } else {
-      if (!EmailDoCoMoResultParser.isBasicallyValidEmailAddress(rawText)) {
-        return null;
-      }
-      emailAddress = rawText;
-      return new EmailAddressParsedResult(emailAddress, null, null, "mailto:" + emailAddress);
-    }
-  }
+	@Override
+	public EmailAddressParsedResult parse(Result result) {
+		String rawText = getMassagedText(result);
+		String emailAddress;
+		if (rawText.startsWith("mailto:") || rawText.startsWith("MAILTO:")) {
+			// If it starts with mailto:, assume it is definitely trying to be
+			// an email address
+			emailAddress = rawText.substring(7);
+			int queryStart = emailAddress.indexOf('?');
+			if (queryStart >= 0) {
+				emailAddress = emailAddress.substring(0, queryStart);
+			}
+			emailAddress = urlDecode(emailAddress);
+			Map<String, String> nameValues = parseNameValuePairs(rawText);
+			String subject = null;
+			String body = null;
+			if (nameValues != null) {
+				if (emailAddress.isEmpty()) {
+					emailAddress = nameValues.get("to");
+				}
+				subject = nameValues.get("subject");
+				body = nameValues.get("body");
+			}
+			return new EmailAddressParsedResult(emailAddress, subject, body,
+					rawText);
+		} else {
+			if (!EmailDoCoMoResultParser.isBasicallyValidEmailAddress(rawText)) {
+				return null;
+			}
+			emailAddress = rawText;
+			return new EmailAddressParsedResult(emailAddress, null, null,
+					"mailto:" + emailAddress);
+		}
+	}
 
 }
