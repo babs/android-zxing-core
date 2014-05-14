@@ -18,6 +18,13 @@ package com.google.zxing.common;
 
 import java.util.Arrays;
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+
 /**
  * <p>
  * Represents a 2D matrix of bits. In function arguments below, and throughout
@@ -47,6 +54,14 @@ public final class BitMatrix implements Cloneable {
 	private final int rowSize;
 	private final int[] bits;
 
+	private Bitmap mBitmap;
+	private Canvas mCanvas;
+	private Paint pblack = new Paint() {
+		{
+			setColor(Color.BLACK);
+		}
+	};
+
 	// A helper to construct a square matrix.
 	public BitMatrix(int dimension) {
 		this(dimension, dimension);
@@ -61,13 +76,32 @@ public final class BitMatrix implements Cloneable {
 		this.height = height;
 		this.rowSize = (width + 31) >> 5;
 		bits = new int[rowSize * height];
+		mBitmap = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+		mBitmap.eraseColor(Color.WHITE);
+		mCanvas = new Canvas(mBitmap);
 	}
 
-	private BitMatrix(int width, int height, int rowSize, int[] bits) {
+	private BitMatrix(int width, int height, int rowSize, int[] bits,
+			Bitmap bitmap) {
 		this.width = width;
 		this.height = height;
 		this.rowSize = rowSize;
 		this.bits = bits;
+		if (bitmap != null) {
+			this.mBitmap = Bitmap.createBitmap(bitmap);
+		} else {
+			this.mBitmap = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+			mBitmap.eraseColor(Color.WHITE);
+		}
+		mCanvas = new Canvas(mBitmap);
+	}
+
+	public Bitmap getBitmap() {
+		return mBitmap;
+	}
+
+	public Canvas getCanvas() {
+		return mCanvas;
 	}
 
 	/**
@@ -84,6 +118,7 @@ public final class BitMatrix implements Cloneable {
 	public boolean get(int x, int y) {
 		int offset = y * rowSize + (x >> 5);
 		return ((bits[offset] >>> (x & 0x1f)) & 1) != 0;
+		// return mBitmap.getPixel(x, y) == Color.BLACK;
 	}
 
 	/**
@@ -97,6 +132,7 @@ public final class BitMatrix implements Cloneable {
 	 *            The vertical component (i.e. which row)
 	 */
 	public void set(int x, int y) {
+		mBitmap.setPixel(x, y, Color.BLACK);
 		int offset = y * rowSize + (x >> 5);
 		bits[offset] |= 1 << (x & 0x1f);
 	}
@@ -114,6 +150,7 @@ public final class BitMatrix implements Cloneable {
 	public void flip(int x, int y) {
 		int offset = y * rowSize + (x >> 5);
 		bits[offset] ^= 1 << (x & 0x1f);
+		mBitmap.setPixel(x, y, get(x, y) ? Color.WHITE : Color.BLACK);
 	}
 
 	/**
@@ -124,6 +161,7 @@ public final class BitMatrix implements Cloneable {
 		for (int i = 0; i < max; i++) {
 			bits[i] = 0;
 		}
+		mBitmap.eraseColor(Color.WHITE);
 	}
 
 	/**
@@ -155,6 +193,9 @@ public final class BitMatrix implements Cloneable {
 			throw new IllegalArgumentException(
 					"The region must fit inside the matrix");
 		}
+
+		mCanvas.drawRect(left, top, right, bottom, pblack);
+
 		for (int y = top; y < bottom; y++) {
 			int offset = y * rowSize;
 			for (int x = left; x < right; x++) {
@@ -194,6 +235,13 @@ public final class BitMatrix implements Cloneable {
 	 *            {@link BitArray} to copy from
 	 */
 	public void setRow(int y, BitArray row) {
+		for (int x = 0; x < row.getSize(); x++) {
+			mBitmap.setPixel(x, y, row.get(x) ? Color.BLACK : Color.WHITE);
+		}
+		System.arraycopy(row.getBitArray(), 0, bits, y * rowSize, rowSize);
+	}
+
+	private void setBARow(int y, BitArray row) {
 		System.arraycopy(row.getBitArray(), 0, bits, y * rowSize, rowSize);
 	}
 
@@ -211,9 +259,14 @@ public final class BitMatrix implements Cloneable {
 			bottomRow = getRow(height - 1 - i, bottomRow);
 			topRow.reverse();
 			bottomRow.reverse();
-			setRow(i, bottomRow);
-			setRow(height - 1 - i, topRow);
+			setBARow(i, bottomRow);
+			setBARow(height - 1 - i, topRow);
 		}
+		Matrix matrix = new Matrix();
+		matrix.setRotate(180);
+		mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(),
+				mBitmap.getHeight(), matrix, false);
+		mCanvas = new Canvas(mBitmap);
 	}
 
 	/**
@@ -366,7 +419,7 @@ public final class BitMatrix implements Cloneable {
 
 	@Override
 	public BitMatrix clone() {
-		return new BitMatrix(width, height, rowSize, bits.clone());
+		return new BitMatrix(width, height, rowSize, bits.clone(), mBitmap);
 	}
 
 }
