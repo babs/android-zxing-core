@@ -38,6 +38,8 @@ import com.google.zxing.qrcode.encoder.ByteMatrix;
  * @author Guillaume Le Biller Added to zxing lib.
  */
 public final class DataMatrixWriter implements Writer {
+	private int width = 0;
+	private int height = 0;
 
 	@Override
 	public BitMatrix encode(String contents, BarcodeFormat format, int width,
@@ -48,6 +50,9 @@ public final class DataMatrixWriter implements Writer {
 	@Override
 	public BitMatrix encode(String contents, BarcodeFormat format, int width,
 			int height, Map<EncodeHintType, ?> hints) {
+
+		this.width = width;
+		this.height = height;
 
 		if ("".equals(contents)) {
 			throw new IllegalArgumentException("Found empty contents");
@@ -115,7 +120,7 @@ public final class DataMatrixWriter implements Writer {
 	 *            The symbol info to encode.
 	 * @return The bit matrix generated.
 	 */
-	private static BitMatrix encodeLowLevel(DefaultPlacement placement,
+	private BitMatrix encodeLowLevel(DefaultPlacement placement,
 			SymbolInfo symbolInfo) {
 		int symbolWidth = symbolInfo.getSymbolDataWidth();
 		int symbolHeight = symbolInfo.getSymbolDataHeight();
@@ -173,17 +178,21 @@ public final class DataMatrixWriter implements Writer {
 	 *            The input matrix.
 	 * @return The output matrix.
 	 */
-	private static BitMatrix convertByteMatrixToBitMatrix(ByteMatrix matrix) {
+	private BitMatrix convertByteMatrixToBitMatrix(ByteMatrix matrix) {
 		int matrixWidgth = matrix.getWidth();
 		int matrixHeight = matrix.getHeight();
 
-		BitMatrix output = new BitMatrix(matrixWidgth, matrixHeight);
+		int pxsize = Math.min(width / matrix.getWidth(),
+				height / matrix.getHeight());
+
+		BitMatrix output = new BitMatrix(matrixWidgth * pxsize, matrixHeight
+				* pxsize);
 		output.clear();
 		for (int i = 0; i < matrixWidgth; i++) {
 			for (int j = 0; j < matrixHeight; j++) {
 				// Zero is white in the bytematrix
 				if (matrix.get(i, j) == 1) {
-					output.set(i, j);
+					output.setRegion(i * pxsize, j * pxsize, pxsize, pxsize);
 				}
 			}
 		}
